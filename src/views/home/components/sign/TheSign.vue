@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import TheIn from "./TheIn.vue";
 import { computed, ref, reactive, watch, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 // Element UI
-import { ElRow, ElCol, ElCard, ElContainer, ElAlert } from "element-plus";
+import {
+  ElRow,
+  ElCol,
+  ElCard,
+  ElContainer,
+  ElAlert,
+  ElForm,
+} from "element-plus";
 
 // Firebase
 import { createUser, signInUser, recoveryPswUser } from "@/firebase/auth";
@@ -35,9 +43,6 @@ const spinner = reactive({
 });
 
 // Computed
-const joinedUserAlert = computed((): string =>
-  route.query.joined ? "New user is joined" : ""
-);
 const headerTitle = computed(() => {
   if (isLoginForm.value) return "Login";
   else if (isRecoveryPswForm.value) return "Recovery";
@@ -100,31 +105,38 @@ const recoveryPws = async (email: string) => {
               }}</el-alert>
             </div>
             <div class="d-flex justify-center">
-              <TheRecovery
-                v-if="isRecoveryPswForm"
-                :is-loading="spinner.active"
-                @login="resetRecoveryForm"
-                @recovery="recoveryPws"
-              />
-              <template v-else>
-                <TheLogin
-                  v-if="isLoginForm"
-                  :alert="joinedUserAlert"
+              <el-form>
+                <TheRecovery
+                  v-if="isRecoveryPswForm"
                   :is-loading="spinner.active"
-                  @login="loginTo"
-                  @join="isLoginForm = !isLoginForm"
-                  @psw-recovery="
-                    (isLoginForm = !isLoginForm),
-                      (isRecoveryPswForm = !isRecoveryPswForm)
-                  "
+                  @login="resetRecoveryForm"
+                  @recovery="recoveryPws"
                 />
-                <TheJoin
-                  v-else
-                  :is-loading="spinner.active"
-                  @join="addUser"
-                  @login="isLoginForm = !isLoginForm"
-                />
-              </template>
+                <template v-else>
+                  <!-- <TheLogin
+                    v-if="isLoginForm"
+                    :is-loading="spinner.active"
+                    @login="loginTo"
+                    @join="isLoginForm = !isLoginForm"
+                    @psw-recovery="
+                      (isLoginForm = !isLoginForm),
+                        (isRecoveryPswForm = !isRecoveryPswForm)
+                    "
+                  /> -->
+                  <TheIn
+                    v-if="isLoginForm"
+                    :is-loading="spinner.active"
+                    @sign-in-by-email="spinner.active"
+                    @sign-in-by-psw="spinner.active"
+                  />
+                  <TheJoin
+                    v-else
+                    :is-loading="spinner.active"
+                    @join="addUser"
+                    @login="isLoginForm = !isLoginForm"
+                  />
+                </template>
+              </el-form>
             </div>
           </el-card>
         </el-col>

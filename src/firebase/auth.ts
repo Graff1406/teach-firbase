@@ -7,7 +7,10 @@ import {
   sendSignInLinkToEmail,
   isSignInWithEmailLink,
   signInWithEmailLink,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
+  signInWithPopup, GoogleAuthProvider
 } from "firebase/auth";
 import {app} from './index'
 import catchIfAsyncError from "./catchIfAsyncError";
@@ -47,4 +50,19 @@ export const confirmEmailUser = async () => {
 }
 
 export const recoveryPswUser = async (email: string) =>
-await catchIfAsyncError(async () => await sendPasswordResetEmail(auth, email, {url: `${url}?${email}`}))
+  await catchIfAsyncError(async () => 
+    await sendPasswordResetEmail(auth, email, {url: `${url}?${email}`}))
+
+export const signInWithPhoneUser = async (phoneNumber: string) => {
+  window.recaptchaVerifier = new RecaptchaVerifier(
+    'sign-in-button', 
+    {'size': 'invisible'}, 
+  auth);
+  return await catchIfAsyncError(async () => 
+    await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier))
+}
+
+export const signInWitGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  return await catchIfAsyncError(async () => await signInWithPopup(auth, provider))
+}

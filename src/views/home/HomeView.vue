@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import TheSign from "./components/sign/TheSign.vue";
+import TheSign from "./components/sign/TheSign2.vue";
 import { ElContainer, ElMain, ElLoading } from "element-plus";
 
 // firebase
@@ -19,10 +19,6 @@ const isLoading = ref(true);
 
 // Auth user watcher
 onAuthStateChanged(auth, async (user) => {
-  console.log(
-    "🚀 ~ file: HomeView.vue ~ line 22 ~ onAuthStateChanged ~ auth",
-    auth
-  );
   if (user?.uid) await router.replace({ name: "dashboard" });
   isLoading.value = false;
   loadingInstance.close();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, computed, defineProps, defineEmits } from "vue";
+import { reactive, computed } from "vue";
 import emailValidator from "email-validator";
 
 // Element UI
