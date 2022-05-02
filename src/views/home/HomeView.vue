@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import TheSign from "./components/sign/TheSign2.vue";
-import { ElContainer, ElMain, ElLoading } from "element-plus";
+import SignForm from "./components/sign/SignForm.vue";
+import { ElContainer, ElLoading } from "element-plus";
 
 // firebase
 import { auth, confirmEmailUser } from "@/firebase/auth";
@@ -28,8 +28,6 @@ if (route.query.mode === "signIn") confirmEmailUser();
 </script>
 <template>
   <el-container>
-    <!-- <el-main> -->
-    <TheSign v-if="!isLoading" />
-    <!-- </el-main> -->
+    <SignForm v-if="!isLoading" />
   </el-container>
 </template>

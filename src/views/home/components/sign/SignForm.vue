@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, reactive, watch, nextTick } from "vue";
+import { computed, ref, reactive } from "vue";
 
 // Element UI
 import {
@@ -15,17 +15,12 @@ import {
 import {
   createUser,
   signInUser,
-  recoveryPswUser,
   signInWithPhoneUser,
   signInWitGoogle,
   auth,
 } from "@/firebase/auth";
 
 // Components
-// import TheJoin from "./TheJoin.vue";
-// import TheLogin from "./TheLogin.vue";
-// import TheRecovery from "./TheRecovery.vue";
-//
 import SignIn from "./SignIn.vue";
 import SignOTP from "./SignOTP.vue";
 import SignPws from "./SignPws.vue";
@@ -37,9 +32,13 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 // TS
-type Spinner = { active: boolean; run: Promise<any>; switch: void };
+type Callback = () => void;
+type Spinner = {
+  active: boolean;
+  run: (callback: Callback) => Promise<void>;
+  switch: () => void;
+};
 type LoginProcess = {
-  step: number;
   type: string;
   isUserExist: boolean;
   login: string;
@@ -58,7 +57,7 @@ const spinner = reactive<Spinner>({
   switch() {
     this.active = !this.active;
   },
-  async run(callback: () => void) {
+  async run(callback: Callback) {
     try {
       this.switch();
       await callback();
@@ -81,6 +80,7 @@ const headerTitle = computed<string>(() => {
   else return "Sign In";
 });
 
+// Methods
 const controlUserByPhoneSignIn = (savePhone = false): boolean => {
   const item = "firebase-sign-in-by-phone";
   const firebaseSignInByPhone = localStorage.getItem(item);
@@ -89,7 +89,6 @@ const controlUserByPhoneSignIn = (savePhone = false): boolean => {
   return isUserExist;
 };
 
-// Methods
 const handleSignInEmail = (email: string) => {
   spinner.run(async () => {
     const [type] = await fetchSignInMethodsForEmail(auth, email);
@@ -180,44 +179,10 @@ const handleBackButton = () => {
                   @sign-in-by-otp="handleSignInOtp"
                   @sign-in-by-google="handleSigInGoogle"
                 />
-                <!-- <TheRecovery
-                  v-if="isRecoveryPswForm"
-                  :is-loading="spinner.active"
-                  @login="resetRecoveryForm"
-                  @recovery="recoveryPws"
-                />
-                <template v-else>
-                  <TheLogin
-                    v-if="isLoginForm"
-                    :is-loading="spinner.active"
-                    @login="loginTo"
-                    @join="isLoginForm = !isLoginForm"
-                    @psw-recovery="
-                      (isLoginForm = !isLoginForm),
-                        (isRecoveryPswForm = !isRecoveryPswForm)
-                    "
-                  />
-                  <TheJoin
-                    v-else
-                    :is-loading="spinner.active"
-                    @join="addUser"
-                    @login="isLoginForm = !isLoginForm"
-                  />
-                </template> -->
               </el-form>
             </div>
           </el-card>
         </el-col>
-        <!-- <el-col :span="24" :offset="12" style="margin-top: 20px">
-          <el-card shadow="never" class="d-flex justify-center">
-            <el-button
-              :type="!isLoginForm ? 'warning' : 'success'"
-              @click="isLoginForm = !isLoginForm"
-            >
-              {{ isLoginForm ? "Join" : "Login" }}
-            </el-button>
-          </el-card>
-        </el-col> -->
       </el-row>
     </slot>
   </el-container>

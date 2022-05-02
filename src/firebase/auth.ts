@@ -3,14 +3,14 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
-  // onAuthStateChanged,
   sendSignInLinkToEmail,
   isSignInWithEmailLink,
   signInWithEmailLink,
   sendPasswordResetEmail,
   signInWithPhoneNumber,
   RecaptchaVerifier,
-  signInWithPopup, GoogleAuthProvider
+  signInWithPopup,
+  GoogleAuthProvider
 } from "firebase/auth";
 import {app} from './index'
 import catchIfAsyncError from "./catchIfAsyncError";

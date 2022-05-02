@@ -82,23 +82,15 @@ const runLogin = async () => {
       <div class="google-btn__text">Sign In with Google</div>
     </div>
   </div>
-
-  <!-- <div class="form-psw-recovery">
-      <el-button
-        type="text"
-        style="margin-left: 0"
-        @click="emit('psw-recovery')"
-        >Password recovery</el-button
-      >
-    </div> -->
 </template>
 <style lang="scss" scoped>
+$color: #79bbff;
 .google-btn {
   cursor: pointer;
   display: flex;
   align-items: center;
   height: 32px;
-  border: 1px solid;
+  border: 1px solid $color;
   border-radius: 4px;
   justify-content: center;
   transition: 0.2s;
@@ -115,6 +107,10 @@ const runLogin = async () => {
     &-img {
       width: 16px;
     }
+  }
+
+  &__text {
+    color: $color;
   }
 }
 </style>

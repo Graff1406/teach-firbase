@@ -18,6 +18,7 @@ const props = defineProps({
 const emit = defineEmits<{
   (e: "confirm-psw", password: string): void;
   (e: "back"): void;
+  (el: "psw-recovery"): void;
 }>();
 
 // Data
