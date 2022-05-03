@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
+// Components
 import SignForm from "./components/sign/SignForm.vue";
+
+// Elements
 import { ElContainer, ElLoading } from "element-plus";
 
 // firebase
