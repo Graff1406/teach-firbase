@@ -23,7 +23,11 @@ interface Condition {
 export const getDocList = async (collectionName: string) =>
   await catchIfAsyncError(async () => {
     const res = await getDocs(collection(db, collectionName));
-    return res.forEach(d => d.data());
+    let dataDocs = []
+    res.forEach(d => {
+      dataDocs.push({...d.data(), id: d.id})
+    });
+    return dataDocs;
   })
 
 export const getDocListWhere = async (collectionName: string, condition: Condition) => 
@@ -34,13 +38,17 @@ export const getDocListWhere = async (collectionName: string, condition: Conditi
       where(condition.key, condition.operator, condition.value)
     );
     const res = await getDocs(request)
-    return res.forEach(d => d.data());
+    let dataDocs = []
+    res.forEach(d => {
+      dataDocs.push({...d.data(), id: d.id})
+    });
+    return dataDocs;
   })
 
 export const getDocById = async (collectionName: string, docID: string) =>
   await catchIfAsyncError(async () => {
     const document = doc(db, collectionName, docID);
     const res = await getDoc(document);
-    return res?.data() ?? {};
+  return res?.data() ?? {};
   })
 

@@ -9,12 +9,15 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "dayjs": "^1.11.1",
     "element-plus": "^2.1.7",
     "email-validator": "^2.0.4",
     "firebase": "^9.6.10",
     "firebaseui": "^6.0.1",
+    "format-duration": "^2.0.0",
     "libphonenumber-js": "^1.9.50",
     "pinia": "^2.0.11",
+    "tiny-timer": "^1.6.0",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12"
   },

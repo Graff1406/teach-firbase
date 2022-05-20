@@ -1,26 +1,51 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
 // Compoenets
 import AppHeader from "./components/AppHeader.vue";
 
 // Elements
 import { ElButton, ElContainer, ElHeader, ElMain } from "element-plus";
-import { Timer } from "@element-plus/icons-vue";
 
 // firebase
 import { signOutUser } from "@/firebase/auth";
 
 // Router
 import { useRouter, useRoute } from "vue-router";
+import TheWeek from "./components/TheWeek.vue";
+
+// // Firebase
+// import { getDocList } from "@/firebase/CRUD";
+// import { TASKS } from "@/firebase/collection-name";
+// import catchIfAsyncError from "@/firebase/catchIfAsyncError";
+
+// Interfaces
+// import type { Records, CreatedRecord } from "@/ts/interfaces";
 
 const router = useRouter();
 
 const route = useRoute();
+
+// Data
+// const records = ref<Records>({
+//   tuesday: [],
+//   wednesday: [],
+// });
 
 // Methods
 const logout = async () => {
   await signOutUser();
   router.replace({ name: "home" });
 };
+
+// catchIfAsyncError(async () => {
+//   const tasks = await getDocList(TASKS);
+//   console.log(
+//     "🚀 ~ file: DashboardView.vue ~ line 43 ~ catchIfAsyncError ~ tasks",
+//     tasks
+//   );
+//   // records.value = tasks
+// });
 </script>
 
 <template>
@@ -28,11 +53,13 @@ const logout = async () => {
     <el-header class="app-header">
       <app-header>
         <template #right-side>
-          <el-button type="primary" plain @click="logout">log Out</el-button>
+          <el-button plain @click="logout">log Out</el-button>
         </template>
       </app-header>
     </el-header>
-    <el-main class="app-main">Main</el-main>
+    <el-main class="app-main">
+      <the-week></the-week>
+    </el-main>
     <!-- <div>
       <h1 v-if="route.query.guest">
         Welcome <span style="color: green; font-weight: 800">Guest</span>! You
@@ -62,5 +89,6 @@ const logout = async () => {
 
 .app-main {
   /* height: 100vh; */
+  // background-color: gray;
 }
 </style>

@@ -7,6 +7,6 @@ export default (callback: CallbackFunction) => {
   try {
     return Promise.resolve(callback())
   } catch(error: unknown) {
-    if (error instanceof Error) throw new Error(error.message);
+    if (error instanceof Error) throw new Error(`In catchIfAsyncError: ${error.message}`);
   }
 } 

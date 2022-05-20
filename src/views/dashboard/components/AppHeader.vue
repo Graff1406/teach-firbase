@@ -10,7 +10,7 @@ import { Timer } from "@element-plus/icons-vue";
       <el-icon class="app-header-content-logo__icon"
         ><timer size="18"
       /></el-icon>
-      <span class="app-header-content-logo__text">Smart Timer</span>
+      <span class="app-header-content-logo__text">Smart Reminder</span>
       <el-divider direction="vertical"></el-divider>
     </div>
     <slot name="right-side"></slot>
